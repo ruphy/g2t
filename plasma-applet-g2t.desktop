@@ -1,10 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=
+Name=g2t
 Comment=
 Type=Service
 ServiceTypes=Plasma/Applet
- 
+
 X-KDE-Library=plasma_applet_g2t
 X-KDE-PluginInfo-Author=Riccardo Iaconelli
 X-KDE-PluginInfo-Email=riccardo@kde.org
