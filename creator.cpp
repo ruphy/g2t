@@ -9,6 +9,7 @@
 
 #include "creator.h"
 #include <QGraphicsGridLayout>
+#include <KLocalizedString>
 #include <Plasma/Label>
 #include <Plasma/LineEdit>
 #include <Plasma/PushButton>
@@ -23,9 +24,9 @@ Creator::Creator(QGraphicsItem *parent = 0)
     m_addButton = new Plasma::PushButton(this);
     m_layout = new QGraphicsGridLayout(this);
 
-    m_toLabel->setText("Tell to:");
-    m_toLabel->setText("Message:");
-    m_addButton->setText("Add!");
+    m_toLabel->setText(i18n("Tell to:"));
+    m_messageLabel->setText(i18n("Message:"));
+    m_addButton->setText(i18n("Add!"));
 
     m_layout->addItem(m_toLabel, 0, 0);
     m_layout->addItem(m_to, 1, 0);

@@ -31,6 +31,7 @@ G2t::G2t(QObject *parent, const QVariantList &args)
     setBackgroundHints(Plasma::Applet::StandardBackground);
     m_layout = new QGraphicsLinearLayout(Qt::Vertical, this);
     m_newReminderButton = new Plasma::PushButton(this);
+    m_newReminderButton->setText(i18n("Add new reminder"));
     m_layout->addItem(m_newReminderButton);
 
     updateGeometry();
