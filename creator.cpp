@@ -33,8 +33,14 @@ Creator::Creator(QGraphicsItem *parent = 0)
     m_layout->addItem(m_message, 1, 1);
     m_layout->addItem(m_addButton, 0, 2, 2, 1);
 
-    connect(m_addButton, SIGNAL(clicked()), this, SIGNAL(add(m_to->text(), m_message->text())));
+    connect(m_addButton, SIGNAL(clicked()), this, SLOT(slotAdd()));
 
     setLayout(m_layout);
 }
 
+void Creator::slotAdd()
+{
+    emit add(m_to->text(), m_message->text());
+}
+
+#include "creator.moc"

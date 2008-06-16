@@ -14,8 +14,9 @@
 #include <QPainter>
 #include <QFontMetrics>
 #include <QSizeF>
+#include <QGraphicsScene>
 #include <QGraphicsLinearLayout>
-
+#include <KDebug>
 #include <Plasma/Svg>
 #include <Plasma/Theme>
 #include <Plasma/PushButton>
@@ -23,6 +24,7 @@
 G2t::G2t(QObject *parent, const QVariantList &args)
     : Plasma::Applet(parent, args),
     m_svg(this),
+    m_creator(0),
     m_icon("plasma")
 {
     // this will get us the standard applet background, for free!
@@ -41,6 +43,14 @@ G2t::G2t(QObject *parent, const QVariantList &args)
 
 G2t::~G2t()
 {
+    // don't crash when deleting m_creator...
+    if (m_creator && m_creator->isVisible()) {
+        m_layout->removeItem(m_creator);
+        scene()->removeItem(m_creator);
+        m_creator->deleteLater();
+        m_creator = 0;
+    }
+
     if (hasFailedToLaunch()) {
         // Do some cleanup here
     } else {
@@ -60,7 +70,12 @@ void G2t::init()
 
 void G2t::addReminder()
 {
-    m_creator = new Creator(this);
+    if (!m_creator) {
+        m_creator = new Creator(this);
+    } else {
+        return; // we want only *one* at a time of those creators, for now...
+    }
+
     m_layout->addItem(m_creator); // TODO make me slide in
     updateGeometry();
     resize(sizeHint(Qt::PreferredSize));
@@ -71,9 +86,13 @@ void G2t::reminderAdded(const QString &to, const QString &message)
 {
     disconnect(m_creator, SIGNAL(add(const QString &, const QString &)), this, SLOT(reminderAdded(const QString &, const QString &)));
     m_layout->removeItem(m_creator); // TODO make me slide out
+
+    scene()->removeItem(m_creator);
+    m_creator->deleteLater();
+    m_creator = 0;
+
     updateGeometry();
     resize(sizeHint(Qt::PreferredSize));
-    m_creator->deleteLater();
 
     // TODO store the message =)
 }

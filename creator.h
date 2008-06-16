@@ -22,11 +22,15 @@ namespace Plasma {
 
 class Creator : public QGraphicsWidget
 {
+    Q_OBJECT
     public:
         Creator(QGraphicsItem *parent);
 
     signals:
         void add(const QString &, const QString &);
+
+    private Q_SLOTS:
+        void slotAdd();
 
     private:
         Plasma::Label *m_toLabel;

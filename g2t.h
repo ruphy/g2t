@@ -50,7 +50,6 @@ class G2t : public Plasma::Applet
         QGraphicsLinearLayout *m_layout;
         Plasma::PushButton *m_newReminderButton;
         Creator *m_creator;
-
 };
 
 // This is the command that links your applet to the .desktop file
