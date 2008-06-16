@@ -27,11 +27,12 @@ G2t::G2t(QObject *parent, const QVariantList &args)
 {
     // this will get us the standard applet background, for free!
     setBackgroundHints(Plasma::Applet::StandardBackground);
-    resize(200, 200);
     m_layout = new QGraphicsLinearLayout(Qt::Vertical, this);
     m_newReminderButton = new Plasma::PushButton(this);
     m_layout->addItem(m_newReminderButton);
-    resize(m_layout->sizeHint(Qt::PreferredSize));
+
+    updateGeometry();
+    resize(sizeHint(Qt::PreferredSize));
 
     connect(m_newReminderButton, SIGNAL(clicked()), this, SLOT(addReminder()));
 
@@ -61,7 +62,8 @@ void G2t::addReminder()
 {
     m_creator = new Creator(this);
     m_layout->addItem(m_creator); // TODO make me slide in
-    resize(m_layout->sizeHint(Qt::PreferredSize));
+    updateGeometry();
+    resize(sizeHint(Qt::PreferredSize));
     connect(m_creator, SIGNAL(add(const QString &, const QString &)), this, SLOT(reminderAdded(const QString &, const QString &)));
 }
 
@@ -69,7 +71,8 @@ void G2t::reminderAdded(const QString &to, const QString &message)
 {
     disconnect(m_creator, SIGNAL(add(const QString &, const QString &)), this, SLOT(reminderAdded(const QString &, const QString &)));
     m_layout->removeItem(m_creator); // TODO make me slide out
-    resize(m_layout->sizeHint(Qt::PreferredSize));
+    updateGeometry();
+    resize(sizeHint(Qt::PreferredSize));
     m_creator->deleteLater();
 
     // TODO store the message =)
