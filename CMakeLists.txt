@@ -15,7 +15,10 @@ include_directories(
    )
  
 # We add our source code here
-set(g2t_SRCS g2t.cpp)
+set(g2t_SRCS g2t.cpp
+             reminder.cpp
+             creator.cpp
+   )
  
 # Now make sure all files get to the right place
 kde4_add_plugin(plasma_applet_g2t ${g2t_SRCS})
